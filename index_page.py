@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 #import RPI.GPIO as GPIO
 
 app = Flask(__name__)
@@ -34,6 +34,16 @@ def Right():
     # your code here
     print("right was pressed")
     return render_template("index.html")
+
+@app.route("/action_page", methods = ['POST', 'GET'])
+def ActionPage():
+    if request.method == 'POST':
+        number = request.form['number']
+    else:
+        number = request.args.get('number')
+    print(number)
+    return render_template("index.html")
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
